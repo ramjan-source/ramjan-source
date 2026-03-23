@@ -5,18 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Отзывы</title>
   <style>
-    /* ── Reset ──────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f6fb;
+      background: #f5f6fa;
       color: #222;
     }
 
-    /* ── Section ────────────────────────────────────────────────── */
+    /* ── Section ── */
     .reviews {
-      max-width: 1200px;
+      max-width: 1220px;
       margin: 60px auto;
       padding: 0 20px;
     }
@@ -34,13 +33,13 @@
       font-weight: 600;
       letter-spacing: 1px;
       text-transform: uppercase;
-      padding: 6px 16px;
+      padding: 6px 18px;
       border-radius: 20px;
       margin-bottom: 14px;
     }
 
     .reviews__title {
-      font-size: 36px;
+      font-size: 38px;
       font-weight: 700;
       line-height: 1.2;
       color: #111;
@@ -50,44 +49,82 @@
       margin-top: 12px;
       font-size: 16px;
       color: #666;
-      max-width: 520px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
-    /* ── Grid ───────────────────────────────────────────────────── */
-    .reviews__grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 28px;
-    }
-
-    /* ── Card ───────────────────────────────────────────────────── */
-    .review-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 28px 24px 24px;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+    /* ── List (vertical) ── */
+    .reviews__list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      transition: transform 0.2s, box-shadow 0.2s;
+      gap: 24px;
     }
 
-    .review-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.12);
+    /* ── Card ── */
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 36px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
-    /* Stars */
+    /* Top row: avatar + name/date + stars */
+    .review-card__top {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    /* Avatar */
+    .review-card__avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: #e0e7ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #3b6ef6;
+      overflow: hidden;
+    }
+
+    .review-card__avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .review-card__author-info {
+      flex: 1;
+    }
+
+    .review-card__name {
+      font-size: 17px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.3;
+    }
+
+    .review-card__meta {
+      font-size: 13px;
+      color: #999;
+      margin-top: 3px;
+    }
+
     .review-card__stars {
       display: flex;
-      gap: 4px;
+      gap: 3px;
+      margin-top: 8px;
     }
 
     .star {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       fill: #f5a623;
     }
 
@@ -95,221 +132,234 @@
       fill: #ddd;
     }
 
-    /* Quote icon */
-    .review-card__quote {
-      font-size: 60px;
-      line-height: 0.6;
-      color: #e8f0fe;
-      font-family: Georgia, serif;
-      user-select: none;
-    }
-
-    /* Text */
+    /* Review text */
     .review-card__text {
       font-size: 15px;
-      line-height: 1.7;
+      line-height: 1.75;
       color: #444;
-      flex: 1;
     }
 
-    /* Author */
-    .review-card__author {
+    /* Screenshots row */
+    .review-card__screenshots {
       display: flex;
-      align-items: center;
+      flex-wrap: wrap;
       gap: 12px;
-      padding-top: 16px;
-      border-top: 1px solid #f0f0f0;
     }
 
-    .review-card__avatar {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
+    .review-card__screenshot {
+      width: 140px;
+      height: 100px;
+      border-radius: 10px;
       object-fit: cover;
-      background: #e8f0fe;
+      background: #f0f2f8;
+      border: 1px solid #e4e6ef;
+      overflow: hidden;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      font-weight: 700;
-      color: #3b6ef6;
-      flex-shrink: 0;
     }
 
-    .review-card__name {
-      font-size: 15px;
-      font-weight: 600;
-      color: #111;
+    .review-card__screenshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
     }
 
-    .review-card__meta {
-      font-size: 13px;
-      color: #888;
-      margin-top: 2px;
+    /* placeholder icon when no image src */
+    .review-card__screenshot--placeholder::after {
+      content: '🖼';
+      font-size: 28px;
+      opacity: 0.3;
     }
 
-    /* ── Responsive ─────────────────────────────────────────────── */
+    /* ── Responsive ── */
     @media (max-width: 640px) {
       .reviews__title { font-size: 26px; }
+      .review-card { padding: 24px 18px; }
+      .review-card__screenshot { width: 110px; height: 80px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      БЛОК ОТЗЫВОВ
-════════════════════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <section class="reviews">
 
   <div class="reviews__header">
     <span class="reviews__label">Отзывы</span>
     <h2 class="reviews__title">Что говорят наши клиенты</h2>
-    <p class="reviews__subtitle">
-      Более 2 000 довольных клиентов уже оценили качество нашей работы
-    </p>
+    <p class="reviews__subtitle">Более 2 000 довольных клиентов уже оценили качество нашей работы</p>
   </div>
 
-  <div class="reviews__grid">
+  <div class="reviews__list">
 
-    <!-- Card 1 -->
+    <!-- Отзыв 1 -->
     <article class="review-card">
-      <div class="review-card__stars">
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-      </div>
-      <div class="review-card__quote">"</div>
-      <p class="review-card__text">
-        Отличный сервис! Заказала платье на праздник — всё пришло точно в срок,
-        качество превзошло ожидания. Буду обращаться снова!
-      </p>
-      <div class="review-card__author">
+      <div class="review-card__top">
         <div class="review-card__avatar">А</div>
-        <div>
+        <div class="review-card__author-info">
           <div class="review-card__name">Анна Петрова</div>
           <div class="review-card__meta">Москва · 14 марта 2026</div>
+          <div class="review-card__stars">
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+          </div>
         </div>
+      </div>
+      <p class="review-card__text">
+        Отличный сервис! Заказала платье на праздник — всё пришло точно в срок,
+        качество превзошло ожидания. Вещи точно как на фото, даже лучше вживую.
+        Буду обращаться снова!
+      </p>
+      <div class="review-card__screenshots">
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
       </div>
     </article>
 
-    <!-- Card 2 -->
+    <!-- Отзыв 2 -->
     <article class="review-card">
-      <div class="review-card__stars">
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star star--empty" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+      <div class="review-card__top">
+        <div class="review-card__avatar">И</div>
+        <div class="review-card__author-info">
+          <div class="review-card__name">Игорь Смирнов</div>
+          <div class="review-card__meta">Санкт-Петербург · 9 марта 2026</div>
+          <div class="review-card__stars">
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star star--empty" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+          </div>
+        </div>
       </div>
-      <div class="review-card__quote">"</div>
       <p class="review-card__text">
         Хороший выбор товаров, удобный сайт. Доставка заняла 3 дня, что чуть
         дольше ожидаемого, но упаковка идеальна и товар не повреждён.
+        В целом очень доволен покупкой.
       </p>
-      <div class="review-card__author">
-        <div class="review-card__avatar">И</div>
-        <div>
-          <div class="review-card__name">Игорь Смирнов</div>
-          <div class="review-card__meta">Санкт-Петербург · 9 марта 2026</div>
-        </div>
+      <div class="review-card__screenshots">
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
       </div>
     </article>
 
-    <!-- Card 3 -->
+    <!-- Отзыв 3 -->
     <article class="review-card">
-      <div class="review-card__stars">
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+      <div class="review-card__top">
+        <div class="review-card__avatar">М</div>
+        <div class="review-card__author-info">
+          <div class="review-card__name">Мария Козлова</div>
+          <div class="review-card__meta">Екатеринбург · 2 марта 2026</div>
+          <div class="review-card__stars">
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+          </div>
+        </div>
       </div>
-      <div class="review-card__quote">"</div>
       <p class="review-card__text">
         Всё супер! Менеджер оперативно ответил на все вопросы, помог с выбором
         размера. Вещи сидят идеально. Рекомендую всем!
       </p>
-      <div class="review-card__author">
-        <div class="review-card__avatar">М</div>
-        <div>
-          <div class="review-card__name">Мария Козлова</div>
-          <div class="review-card__meta">Екатеринбург · 2 марта 2026</div>
-        </div>
+      <div class="review-card__screenshots">
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
       </div>
     </article>
 
-    <!-- Card 4 -->
+    <!-- Отзыв 4 -->
     <article class="review-card">
-      <div class="review-card__stars">
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+      <div class="review-card__top">
+        <div class="review-card__avatar">Д</div>
+        <div class="review-card__author-info">
+          <div class="review-card__name">Дмитрий Волков</div>
+          <div class="review-card__meta">Новосибирск · 25 февраля 2026</div>
+          <div class="review-card__stars">
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+          </div>
+        </div>
       </div>
-      <div class="review-card__quote">"</div>
       <p class="review-card__text">
         Очень понравился магазин. Быстрая доставка, вещи как на фото. Особенно
         порадовала упаковка — всё было аккуратно сложено в красивую коробку.
       </p>
-      <div class="review-card__author">
-        <div class="review-card__avatar">Д</div>
-        <div>
-          <div class="review-card__name">Дмитрий Волков</div>
-          <div class="review-card__meta">Новосибирск · 25 февраля 2026</div>
-        </div>
+      <div class="review-card__screenshots">
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
       </div>
     </article>
 
-    <!-- Card 5 -->
+    <!-- Отзыв 5 -->
     <article class="review-card">
-      <div class="review-card__stars">
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star star--empty" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star star--empty" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+      <div class="review-card__top">
+        <div class="review-card__avatar">С</div>
+        <div class="review-card__author-info">
+          <div class="review-card__name">Сергей Лебедев</div>
+          <div class="review-card__meta">Казань · 18 февраля 2026</div>
+          <div class="review-card__stars">
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star star--empty" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star star--empty" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+          </div>
+        </div>
       </div>
-      <div class="review-card__quote">"</div>
       <p class="review-card__text">
         В целом доволен покупкой. Единственный момент — пришлось долго ждать
         ответа от поддержки. Надеюсь, в следующий раз будет быстрее.
       </p>
-      <div class="review-card__author">
-        <div class="review-card__avatar">С</div>
-        <div>
-          <div class="review-card__name">Сергей Лебедев</div>
-          <div class="review-card__meta">Казань · 18 февраля 2026</div>
-        </div>
+      <div class="review-card__screenshots">
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
       </div>
     </article>
 
-    <!-- Card 6 -->
+    <!-- Отзыв 6 -->
     <article class="review-card">
-      <div class="review-card__stars">
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
-        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+      <div class="review-card__top">
+        <div class="review-card__avatar">Е</div>
+        <div class="review-card__author-info">
+          <div class="review-card__name">Елена Новикова</div>
+          <div class="review-card__meta">Нижний Новгород · 10 февраля 2026</div>
+          <div class="review-card__stars">
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+            <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.85 5.35.78-3.87 3.77.91 5.32L10 13.27l-4.78 2.45.91-5.32L2.26 6.63l5.35-.78z"/></svg>
+          </div>
+        </div>
       </div>
-      <div class="review-card__quote">"</div>
       <p class="review-card__text">
         Заказываю уже третий раз и каждый раз остаюсь довольна. Огромный
         ассортимент, приятные цены и очень вежливые сотрудники. Спасибо!
       </p>
-      <div class="review-card__author">
-        <div class="review-card__avatar">Е</div>
-        <div>
-          <div class="review-card__name">Елена Новикова</div>
-          <div class="review-card__meta">Нижний Новгород · 10 февраля 2026</div>
-        </div>
+      <div class="review-card__screenshots">
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
+        <div class="review-card__screenshot review-card__screenshot--placeholder"></div>
       </div>
     </article>
 
-  </div><!-- /.reviews__grid -->
+  </div><!-- /.reviews__list -->
 </section>
 
 </body>
